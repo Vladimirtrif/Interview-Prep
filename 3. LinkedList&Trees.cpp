@@ -154,6 +154,32 @@ bool searchBST(TreeNode* root, int target) {
 }
 
 /*
+  Backtracking: useful pattern, like dfs on a a desciscion tree 
+  make descicion, see if it pans out, if not undo and do something else.
+  Useful for trees and graphs as well for paths.
+*/
+
+// example: return all possible subsets of a set
+vector<vector<int>> subsets(vector<int>& nums) {
+    vector<int> acc;
+    vector<vector<int>> res;
+    subsets_recur(0, nums, acc, res);
+    return res;
+}
+
+// general recursive pattern
+void subsets_recur(int i, vector<int>& nums, vector<int>& acc, vector<vector<int>>& res) {
+  if (i >= nums.size()) {
+    res.push_back(acc);
+    return;
+  }
+  acc.push_back(nums[i]);
+  subsets_recur(i+1, nums, acc, res);
+  acc.pop_back();
+  subsets_recur(i+1, nums, acc, res);
+}
+
+/*
   Tries
   Special trees used to store sets of strings in a space efficient way.
   Idea is to start with root node (that matches anything), and for children
