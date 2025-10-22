@@ -62,3 +62,9 @@ int optimal_Fib(int n) {
   }
   return one_back;
 }
+
+/*
+  Greedy
+  The greedy algorithm is to find the global optimal solution by at each step
+  picking the local optimal step. 
+*/
