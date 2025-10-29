@@ -170,20 +170,52 @@ vector<int> productExceptSelf(vector<int>& nums) {
   Main concepts for sorting are: 
     Time complexity 
 
-    Space complexity: Called In-place if it uses O(1) extra space
+    Space complexity: Called In-place if it doesn't use space outside of arr
+                      (O(1) or just small recursive stack)
 
     Adaptability: whether it is faster when the input is already partially/completely sorted
 
     Stability: Whether it preserves relative order of elements with equal values.
                For example if I have an array of pairs [{1, "One"}, {1, "Two"}, {0, "Zero"}]
-               and we sort by first (the int). Stable guarantees [{0, "Zero"}, {1, "One"}, {1, "Two"}]
-               while non-stable can change order of "One" and "Two"
+               and we sort by first (the int). Stable guarantees 
+               [{0, "Zero"}, {1, "One"}, {1, "Two"}] while non-stable can change
+               order of "One" and "Two"
 */
 
 // Merge Sort
+// Split array into sorted subarrays then merge, arr size 1 = sorted
+// O(n log n), O(n) space (can be made into O(1))
+// Stable, not adaptable
+void mergeSort(int lo, int hi, vector<int>& nums) {
+  if (lo >= hi) return;
+  int mid = lo + (hi - lo)/2;
+  mergeSort(lo, mid, nums);
+  mergeSort(mid + 1, hi, nums);
+  merge(lo, mid, hi, nums);
+}
+
+void merge(int lo, int mid, int hi, vector<int>& nums) {
+  vector<int> arr1(nums.begin() + lo, nums.begin() + mid + 1);
+  vector<int> arr2(nums.begin() + mid + 1, nums.begin() + hi + 1);
+  int ptr1 = 0;
+  int ptr2 = 0;
+  for (int i = lo; i <= hi; i++) {
+    bool pick1 = (ptr1 < arr1.size() && ptr2 < arr2.size() && arr1[ptr1] < arr2[ptr2]) || (ptr2 >= arr2.size());
+    if (pick1) {
+      nums[i] = arr1[ptr1];
+      ptr1++;
+    } else {
+      nums[i] = arr2[ptr2];
+      ptr2++;
+    }
+  }
+  return;
+}
 
 // Quicksort
 
 // Insertion Sort
 
 // Bucket Sort
+
+// Heap sort (See #2)

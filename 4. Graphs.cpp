@@ -122,9 +122,45 @@ void map_bfs(int start_r, int start_c, vector<vector<int>>& grid) {
 
 /*
   Topological Sort
+  Given a DAG, it reads the entire graph in the order such that
+  every node before a given node it read before that node is read.
+  Ie every parent of a node come before it
 */
 
+// Topological sort built on dfs, we use stack so we add node after children
+// and we use visited set to not repeat. Let's say labelled [0, numN)
+// this implementation will also detect cycles
+vector<int> getTopo(int numN, vector<vector<int>>& adj_list) {
+  stack<int> s;
+  vector<bool> visited(numN, false);
+  for (int i = 0; i < numN; i++) {
+    if (!visited[i]) {
+      vector<bool> path(numN, false);
+      if(!topo(i, adj_list, path, visited, s)) return {};
+    }
+  }
+  vector<int> res;
+  while (s.size() > 0) {
+    res.push_back(s.top());
+    s.pop();
+  }
+  return res;
+}
+
+// return true if
+bool topo(int node, vector<vector<int>>& adj_list, vector<bool>& path, vector<bool>& visited, stack<int>& s) {
+  if (path[node]) return false;
+  path[node] = true;
+  for (int next: adj_list[node]) {
+    if (!visited[next] && !topo(next, adj_list, path, visited, s)) return false;
+  }
+  visited[node] = true;
+  s.push(node);
+  return true;
+}
+
 // Dijkstra's
+
 
 // Bellman-Ford
 
