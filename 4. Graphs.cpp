@@ -147,7 +147,7 @@ vector<int> getTopo(int numN, vector<vector<int>>& adj_list) {
   return res;
 }
 
-// return true if
+// return false if a cycle was detected
 bool topo(int node, vector<vector<int>>& adj_list, vector<bool>& path, vector<bool>& visited, stack<int>& s) {
   if (path[node]) return false;
   path[node] = true;
@@ -160,7 +160,6 @@ bool topo(int node, vector<vector<int>>& adj_list, vector<bool>& path, vector<bo
 }
 
 // Dijkstra's
-
 
 // Bellman-Ford
 
