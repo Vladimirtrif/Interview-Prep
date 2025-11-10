@@ -72,7 +72,7 @@ int iterative_binary_search(vector<int>& arr, int target) {
   2 Pointers
   Given an array, instead of doing an O(n^2) search, we can use 2 pointers
   to iterate over array to find the result in O(2 * n) = O(n) time.
-  Classic example is 2sum. Given a sorted array, we want to find the indices
+  Classic example is sorted 2sum. Given a sorted array, we want to find the indices
   of two elements that add up to a given value
 */
 vector<int> twoSum(vector<int> arr, int target) {

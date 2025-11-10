@@ -160,6 +160,32 @@ bool topo(int node, vector<vector<int>>& adj_list, vector<bool>& path, vector<bo
 }
 
 // Dijkstra's
+int dijkstras(int src, int dst, int numNodes, vector<vector<pair<int, int>> adj_list) {
+  vector<int> dists(numNodes, INT_MAX);
+  dists[src] = 0;
+  vector<bool> visited(numNodes, false);
+  auto comparator = [](pair<int, int>& p1, pair<int, int>& p2) {return p1.first > p2.first;};
+  priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(comparator)> min_heap;
+  min_heap.push({0, src});
+  while (min_heap.size() > 0) {
+    int dist = min_heap.top().first;
+    int node =min_heap.top().second;
+    min_heap.pop();
+    if (visited[node]) continue;
+    visited[node] = true;
+    for (pair<int, int>& next: adj_list[node]) {
+      int next_node = next.second;
+      int edge_weight = next.first;
+      int new_dist = dist + edge_weight;
+      if (new_dist < dists[next_node]) {
+        dists[next_node] = new_dist;
+        min_heap.push({new_dist, next_node});
+      }
+    }
+  }
+  return dists[dst];
+}
+
 
 // Bellman-Ford
 
